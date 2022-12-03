@@ -1,0 +1,323 @@
+{% extends "base.html" %} {% load static %} {% load post_tags %}
+{% block content %}
+
+<!-- Container START -->
+
+<div class="container">
+    <div class="row g-4">
+        <!-- Main content START -->
+        <div class="col-lg-8 vstack">
+            <!-- My profile START -->
+            <div class="card">
+                <!-- Cover image -->
+                <div class="h-200px rounded-top" style="background-image: url('{% if user.userprofilesetting.background_img %} {{user.userprofilesetting.background_img.url}} {% endif %}'); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                <!-- Card body START -->
+                <div class="card-body py-0">
+                    <div class="d-sm-flex align-items-start text-center text-sm-start">
+                        <div>
+                            <!-- Avatar -->
+                            <div class="avatar avatar-xxl mt-n5 mb-3">
+                                <img class="avatar-img rounded-circle border border-white border-3" src="{{user.userprofilesetting.profile_img.url}}" alt="" />
+                            </div>
+                        </div>
+                        <div class="ms-sm-4 mt-sm-3">
+                            <!-- Info -->
+                            <h1 class="mb-0 h5">
+                                {{user.username}}<i class="bi bi-patch-check-fill text-success small"></i>
+                            </h1>
+                            <p>{{user.posts_set.count}} blogs</p>
+                        </div>
+                        <!-- Button -->
+                        <div class="d-flex mt-3 justify-content-center ms-sm-auto">
+                            <a href="{% url 'user-settings' %}">
+                                <button class="btn btn-danger-soft me-2" type="button">
+                                    <i class="bi bi-pencil-fill pe-1"></i> Edit profile
+                                </button></a>
+                        </div>
+                    </div>
+                    <!-- List profile -->
+                    <ul class="list-inline mb-0 text-center text-sm-start mt-3 mt-sm-0">
+                        <li class="list-inline-item">
+                            <i class="bi bi-geo-alt me-1"></i> {{user.usersetting.Place}}
+                        </li>
+                        <li class="list-inline-item">
+                            <i class="bi bi-calendar2-plus me-1"></i>
+                            {{user.date_joined.date}}
+                        </li>
+                    </ul>
+                </div>
+                <!-- Card body END -->
+
+                <!-- Profile Nav tabs -->
+                <div class="card-footer mt-3 pt-2 pb-0">
+                    <ul class="nav nav-bottom-line align-items-center justify-content-center justify-content-md-start mb-0 border-0" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="blogs-tab" data-bs-toggle="tab" data-bs-target="#Blogs" type="button" role="tab" aria-controls="blog" aria-selected="true">
+                                Blogs
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                About
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <!-- Main content END -->
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+
+                <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="card">
+                        <!-- Card header START -->
+                        <div class="card-header border-0 pb-0">
+                            <h5 class="card-title">Profile Info</h5>
+                        </div>
+                        <!-- Card header END -->
+                        <!-- Card body START -->
+                        {% for setting in user_setting %}
+                        <div class="card-body">
+                            <div class="rounded border px-3 py-2 mb-3">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6>Overview</h6>
+                                </div>
+                                <p>{{setting.overview}}</p>
+                            </div>
+                            <div class="row g-4">
+                                <div class="col-sm-6">
+                                    <!-- Birthday START -->
+                                    <div class="d-flex align-items-center rounded border px-3 py-2">
+                                        <!-- Date -->
+                                        <p class="mb-0">
+                                            <i class="bi bi-calendar-date fa-fw me-2"></i> Born:
+                                            <strong> {{setting.birth_date}} </strong>
+                                        </p>
+                                    </div>
+                                    <!-- Birthday END -->
+                                </div>
+                                <div class="col-sm-6">
+                                    <!-- Status START -->
+                                    <div class="d-flex align-items-center rounded border px-3 py-2">
+                                        <!-- Date -->
+                                        <p class="mb-0">
+                                            <i class="bi bi-heart fa-fw me-2"></i> Status:
+                                            <strong> {{setting.status}} </strong>
+                                        </p>
+                                    </div>
+                                    <!-- Status END -->
+                                </div>
+
+                                <div class="col-sm-6">
+                                    <!-- Lives START -->
+                                    <div class="d-flex align-items-center rounded border px-3 py-2">
+                                        <!-- Date -->
+                                        <p class="mb-0">
+                                            <i class="bi bi-geo-alt fa-fw me-2"></i> Lives in:
+                                            <strong> {{setting.Place}} </strong>
+                                        </p>
+                                    </div>
+                                    <!-- Lives END -->
+                                </div>
+                                <div class="col-sm-6">
+                                    <!-- Joined on START -->
+                                    <div class="d-flex align-items-center rounded border px-3 py-2">
+                                        <!-- Date -->
+                                        <p class="mb-0">
+                                            <i class="bi bi-geo-alt fa-fw me-2"></i> Joined on:
+                                            <strong> {{user.date_joined.date}} </strong>
+                                        </p>
+                                    </div>
+                                    <!-- Joined on END -->
+                                </div>
+                                <div class="col-sm-6">
+                                    <!-- Joined on START -->
+                                    <div class="d-flex align-items-center rounded border px-3 py-2">
+                                        <!-- Date -->
+                                        <p class="mb-0">
+                                            <i class="bi bi-envelope fa-fw me-2"></i> Email:
+                                            <strong> {{user.email}} </strong>
+                                        </p>
+                                    </div>
+                                    <!-- Joined on END -->
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <!-- Card body END -->
+                    </div>
+                </div>
+
+                <div class="tab-pane active gap-3" id="Blogs" role="tabpanel" aria-labelledby="blogs-tab">
+                    {% if user.posts_set.count == 0 %}
+                    <div class="card">
+                        <div class="text-center">
+                            <div class="py-sm-5 my-sm-5">
+                                <i class="display-1 text-muted bi bi-file-earmark-x"> </i>
+                                <h4 class="mt-2 mb-3 text-body">You Have No Posts</h4>
+                                <a class="btn btn-primary-soft btn-sm" href="{% url 'blog_create' %}" role="button">click here to add</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="card card-body mb-4">
+                        <form class="d-md-flex justify-content-evenly align-items-center">
+                            <div class="">
+                                <label for="" class="form-label">
+                                    {{filter_form.title.label}}
+                                </label>
+                                <div class="">
+                                    {{filter_form.title|addAttr:" {'class':'form-control form-control-sm'}"}}
+                                </div>
+                            </div>
+
+                            <div class="">
+                                <label for="" class="form-label">
+                                    {{filter_form.tag.label}}
+                                </label>
+                                <div class="">
+                                    {{filter_form.tag|addAttr:" {'class':'form-control form-control-sm'}"}}
+                                </div>
+                            </div>
+
+                            <div class="">
+                                <label for="" class="form-label">
+                                    {{filter_form.created_date.label}}
+                                </label>
+                                <div class="">
+                                    <input type="date" name="created_date" class="form-control form-control-sm" value="{{filter_form.created_date.value}}" />
+                                </div>
+                            </div>
+
+                            <div class="">
+                                <label for="" class="form-label">
+                                    {{filter_form.Status.label}}
+                                </label>
+                                <div class="">
+                                    {{filter_form.Status|addAttr:" {'class':'form-select form-control-sm'}"}}
+                                </div>
+                            </div>
+
+                            <div class="mt-2">
+                                <button type="submit" class="btn btn-info-soft btn-sm mt-sm-2 text-uppercase">
+                                    Filter
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div>
+                        {% if user_posts.count == 0 %}
+                        <div class="card">
+                            <div class="text-center">
+                                <div class="py-sm-5 my-sm-5">
+                                    <i class="display-1 text-muted bi bi-file-earmark-x"> </i>
+                                    <h4 class="mt-2 mb-3 text-body">Can't Find the Posts</h4>
+                                    <a class="btn btn-primary-soft btn-sm" href="{% url 'user' %}" role="button">
+                                        click here
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="row g-4 row-cols-sm-1 row-cols-lg-3 row-cols-auto row-cols-md-2">
+                            {% for user_post in user_posts %}
+                            <div class="col">
+                                <div class="card border-1 border shadow rounded">
+                                    <div class="bg-image hover-overlay ripple" data-ripple-color="light">
+                                        <img src="{{user_post.post_image.url|default:''}}" class="w-100 h-300px" />
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title d-flex justify-content-between">
+                                            {{user_post.title|slice:22}}..
+                                            {% cycle 'success' 'info' 'danger' 'warning' 'primary' as bgcolor silent %}
+                                            <span class="badge bg-{{bgcolor}} bg-opacity-10 text-{{bgcolor}} fw-bold">
+                                                {{user_post.tag}}
+                                            </span>
+                                        </h5>
+                                        <div class="card-text">
+                                            <div>
+                                                <em>created Date : </em> {{user_post.created_date}}
+                                            </div>
+                                            <div>
+                                                <em>Last Modified : </em>
+                                                {{user_post.last_modified_date}}
+                                            </div>
+                                            <div><em>Status : </em> {{user_post.Status}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a href="{% url 'view' user_post.blog_id %}" class="btn btn-success-soft btn-sm">View</a>
+                                        <div class="float-end">
+                                            <a href="{% url 'blog_update' user_post.blog_id %}" class="btn btn-primary-soft-hover btn-sm">Edit</a>
+                                            <!-- Modal trigger button -->
+                                            <button type="button" class="btn btn-danger-soft btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-blog="{% url 'blog-delete' user_post.blog_id %}" data-bs-title="{{user_post.title}}">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="post" action="">
+                                                <p>Are you sure to Delete this Post</p>
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger-soft float-end">
+                                                    delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <script>
+                                var exampleModal = document.getElementById("exampleModal");
+                                exampleModal.addEventListener(
+                                    "show.bs.modal",
+                                    function (event) {
+                                        // Button that triggered the modal
+                                        var button = event.relatedTarget;
+                                        // Extract info from data-bs-* attributes
+                                        var url = button.getAttribute("data-bs-blog");
+                                        var title = button.getAttribute("data-bs-title");
+                                        // If necessary, you could initiate an AJAX request here
+                                        // and then do the updating in a callback.
+                                        //
+                                        // Update the modal's content.
+                                        var modalTitle = exampleModal.querySelector(".modal-title");
+                                        var modalBodyInput = exampleModal.querySelector("form");
+
+                                        modalTitle.textContent = "Delete Post : " + title;
+                                        // modalBodyInput.value = blog_id
+                                        // "blog/" + blog_id + "/delete"
+                                        console.log(url);
+                                        modalBodyInput.setAttribute("action", url);
+                                    }
+                                );
+                            </script>
+                        </div>
+                        {% endif %} {% endif %}
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+        <!-- Main content end -->
+    </div>
+</div>
+
+<!-- **************** MAIN CONTENT END **************** -->
+{% endblock content %}

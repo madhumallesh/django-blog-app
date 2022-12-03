@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% load post_tags %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 mb-3">
+            <div class="row g-4">
+                <!-- Card News START -->
+                <div class="col-sm-6 col-lg-12">
+                    <div class="card">
+                        <!-- Card header START -->
+                        <div class="card-header pb-0 border-0">
+                            <h5 class="card-title mb-0">Recent post</h5>
+                        </div>
+                        <!-- Card header END -->
+                        <!-- Card body START -->
+                        <div class="card-body">
+                            <!-- News item -->
+                            {% for post in recent_posts %}
+                            <div class="mb-3">
+                                <h6 class="mb-0"><a href="{% url 'blog' post.blog_id %}">
+                                        {{post.title}}
+                                    </a></h6>
+                                <small>
+                                    {% if post.created_date.date|olderDay %}
+                                    {{post.created_date}}
+                                    {% else %}
+                                    {{post.created_date|timesince}}
+                                    {% endif %}
+                                </small>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <!-- Card body END -->
+                    </div>
+                </div>
+                <!-- Card News END -->
+
+                <!-- Card News START -->
+                <div class="col-sm-6 col-lg-12 mb-3">
+                    <div class="card">
+                        <!-- Card header START -->
+                        <div class="card-header pb-0 border-0">
+                            <h5 class="card-title mb-0">Tags</h5>
+                        </div>
+                        <!-- Card header END -->
+                        <!-- Card body START -->
+                        <div class="card-body">
+                            <!-- Tag list START -->
+
+                            <ul class="list-inline mb-0 d-flex flex-wrap gap-2">
+                                <li class="list-inline-item m-0">
+                                    <a class="btn btn-outline-light btn-sm" href="/">View all </a>
+                                </li>
+                                {% for tag in tags %}
+                                <li class="list-inline-item m-0">
+                                    <a class="btn btn-outline-light btn-sm text-capitalize" href="?tag={{tag.tagname}}">{{tag.tagname}}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <!-- Tag list END -->
+                            <!-- Card body END -->
+                        </div>
+                    </div>
+                    <!-- Card News END -->
+                </div>
+
+            </div>
+            <!-- Right sidebar END -->
+        </div>
+        <div class="col-lg-8">
+            <div class="bg-mode p-4">
+                <div class="d-flex justify-content-between">
+                    <div class="h4 mt-2">Blogs</div>
+                    <div>
+                        <form class="rounded position-relative" method="get" action="">
+                            {{search_form.title|addAttr:"{'class':'form-control py-2', 'placeholder':'Search..'}"}}
+                            <button class="btn bg-transparent text-secondary px-2 py-0 position-absolute top-50 end-0 translate-middle-y" type="submit">
+                                <i class="bi bi-search fs-5"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
+                <!-- Blog item END -->
+                <hr class="my-4">
+                <!-- Blog item START -->
+
+                {% if blogs.count == 0 %}
+                <div class="card border border-0">
+                    <div class="text-center">
+                        <div class="py-sm-5 my-sm-5">
+                            <i class="display-1 text-muted bi bi-file-earmark-x"> </i>
+                            <h4 class="mt-2 mb-3 text-body">Can't find the Posts </h4>
+                            <a class="btn btn-primary-soft btn-sm" href="/" role="button">
+                                click here
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% else %}
+
+                {% for blog in blogs %}
+                <div class="card border border-0 mb-3">
+                    <div class="row g-0">
+                        <div class="col-sm-4 mt-3">
+                            <img src="{{blog.post_image.url}}" class="rounded img-fluid w-auto">
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="card-body">
+                                {% cycle 'success' 'info' 'danger' 'secondary' 'primary' 'warning' as bgcolor silent %}
+
+                                <span class="badge bg-opacity-10 text-{{bgcolor}} mb-2 fw-bold bg-{{bgcolor}}">
+                                    {{blog.tag}}
+                                </span>
+                                <a class="card-title h6" href="{% url 'blog' blog.blog_id %}">
+                                    {{blog.title}}
+                                </a>
+
+                                <div class="card-text">
+                                    {{blog.content|safe|slice:100}}
+                                    <a class="small text-primary" href="{% url 'blog' blog.blog_id %}">Read More...</a>
+                                </div>
+                                <div class="card-text">
+                                    <span class="small text-secondary" href="#!">
+                                        <i class="bi bi-calendar-date pe-1"></i>
+                                        {{blog.created_date.date}}
+                                    </span>
+                                    <label class="float-end text-secondary">
+                                        <b>Author : </b>
+                                        <a href="?author={{blog.author_id}}" class="text-black">
+                                            {{blog.author}}
+                                        </a>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Blog item END -->
+
+                {% endfor %}
+                {% endif %}
+
+                <!-- Pagination -->
+                {% if page_obj.has_previous or page_obj.has_next %}
+                <div class="mt-4">
+                    <nav aria-label="navigation">
+                        <ul class="pagination pagination-light d-inline-block d-md-flex justify-content-center">
+                            {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{% param_replace page=page_obj.previous_page_number %}">
+                                    Previous
+                                </a>
+                            </li>
+                            {% endif %}
+
+                            <li class="page-item active">
+                                <span class="page-link">
+                                    Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}
+                                </span>
+                            </li>
+                            {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{% param_replace page=page_obj.next_page_number %}">Next</a>
+                            </li>
+                            {% endif %}
+
+                        </ul>
+                    </nav>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,8 @@
+Django               
+django-ckeditor          
+django-debug-toolbar     
+django-filter            
+django-js-asset 
+django-redis         
+Faker                    
+Pillow

@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login
+{% endblock title %}
+
+{% block content %}
+
+
+<!-- Container START -->
+<div class="container">
+  <div class="row justify-content-center align-items-center vh-100 py-5">
+    <!-- Main content START -->
+    <div class="col-sm-10 col-md-8 col-lg-7 col-xl-6 col-xxl-5">
+      <!-- Sign in START -->
+      <div class="card card-body text-center p-4 p-sm-5">
+        <!-- Title -->
+        <h1 class="mb-2">Sign in</h1>
+        <p class="mb-0">Don't have an account?<a href="{% url 'register' %}"> Click here to sign up</a></p>
+        <!-- Form START -->
+        <form class="mt-sm-4" action="" method="post">
+          {% csrf_token %}
+
+          <!-- Email -->
+          <div class="mb-3 input-group-lg">
+            <input type="text" class="form-control" placeholder="Enter username" name="username">
+            <small class="text-start text-danger">
+            </small>
+          </div>
+          <!-- New password -->
+          <div class="mb-3 position-relative">
+            <!-- Password -->
+            <div class="input-group input-group-lg">
+              <input class="form-control fakepassword" type="password" id="psw-input" placeholder="Enter new password"
+                name="password">
+              <span class="input-group-text p-0">
+                <i class="fakepasswordicon fa-solid fa-eye-slash cursor-pointer p-2 w-40px"></i>
+              </span>
+            </div>
+
+            <div class="d-flex mt-1">
+              <div id="pswmeter-message" class="rounded"></div>
+              <!-- Password message notification -->
+              <div class="ms-auto text-danger">
+                {% for err in form.password.errors %}
+                {{err}}<i class="bi bi-info-circle ps-1"></i>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="mb-3 d-sm-flex justify-content-end">
+            <a href="{% url 'password-reset' %}">Forgot password?</a>
+          </div>
+          <!-- Button -->
+          <div class="d-grid"><button type="submit" class="btn btn-lg btn-primary">Login</button>
+          </div>
+          <!-- Copyright -->
+          <p class="mb-0 mt-3">©2022 All rights reserved</p>
+        </form>
+        <!-- Form END -->
+      </div>
+      <!-- Sign in START -->
+    </div>
+  </div> <!-- Row END -->
+</div>
+<!-- Container END -->
+{% endblock content %}

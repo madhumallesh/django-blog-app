@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<!-- Container START -->
+<div class="container">
+
+
+  <!-- Main content START -->
+  <div class="vstack gap-4">
+
+    <!-- Account setting tab START -->
+    <div class="tab-pane show active fade" id="nav-setting-tab-1">
+      {% for msg in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+        <strong>Sucess</strong> {{msg}}
+      </div>
+      {% endfor %}
+
+      <!-- Account settings START -->
+      <div class="card mb-4">
+
+        <!-- Title START -->
+        <div class="card-header border-0 pb-0">
+          <h1 class="h5 card-title">Account Settings</h1>
+
+        </div>
+        <!-- Card header START -->
+        <!-- Card body START -->
+        <div class="card-body">
+          <!-- Form settings START -->
+          <form class="row g-3" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% for field in user_form %}
+            <div class="col-sm-6">
+              <label class="form-label">{{field.label}}</label>
+              {{field}}
+
+              <small class="text-danger">
+                {% for error in field.errors %}
+                {{error}}
+                {% endfor %}
+              </small>
+
+            </div>
+            {% endfor %}
+
+            {% for setting_field in user_setting %}
+            <div class="col-sm-6">
+              <label class="form-label">{{setting_field.label}}</label>
+              {{setting_field}}
+            </div>
+            {% endfor %}
+            <br>
+            {% for profile_field in user_profile %}
+            <div class="col-sm-6">
+              <label for="form-label">{{profile_field.label}}</label>
+              {{profile_field}}
+            </div>
+            {% endfor %}
+
+
+            <!-- Button  -->
+            <div class="col-12 text-end">
+              <button type="submit" class="btn btn-sm btn-primary mb-0">Save changes</button>
+            </div>
+          </form>
+          <!-- Settings END -->
+        </div>
+        <!-- Card body END -->
+      </div>
+      <!-- Account settings END -->
+    </div>
+
+  </div>
+
+</div>
+<!-- Container END -->
+{% endblock content %}

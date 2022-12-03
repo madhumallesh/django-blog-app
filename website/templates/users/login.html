@@ -1,0 +1,22 @@
+<div>
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for field in form %}
+        <div>
+            <p>
+                <b>
+                    {{field.label}}
+                </b> {{field}}
+
+            </p>
+        </div>
+
+        {% endfor %}
+        <p>
+            {% for err in form.password.errors %}
+            {{err}}
+            {% endfor %}
+        </p>
+        <button type="submit">Login</button>
+    </form>
+</div>

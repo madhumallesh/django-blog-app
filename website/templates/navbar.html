@@ -1,0 +1,91 @@
+{% load static %}
+<!-- ======================= Header START -->
+<header class="navbar-light fixed-top header-static bg-mode">
+    <!-- Logo Nav START -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <!-- Logo START -->
+            <a class="navbar-brand fw-bold" href="{% url 'home' %}">
+                Blog App
+            </a>
+            <!-- Logo END -->
+            <!-- Nav right START -->
+            <ul class="nav flex-nowrap align-items-center ms-sm-3 list-unstyled">
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="/user">My Posts</a>
+                </li>
+
+                <li class="nav-item" id="abcd">
+                    <a class="nav-link fw-bold" href="{% url 'blog_create' %}">Create Post</a>
+                </li>
+
+                <li class="nav-item ms-2">
+                    <a class="nav-link icon-md btn btn-light p-0" href="{% url 'user-settings' %}">
+                        <i class="bi bi-gear-fill fs-6"> </i>
+                    </a>
+                </li>
+
+                <li class="nav-item ms-2 dropdown">
+                    <a class="nav-link btn icon-md p-0" href="#" id="profileDropdown" role="button" data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img class="avatar-img rounded-2" src='{{user.userprofilesetting.profile_img.url}}' alt="">
+
+                    </a>
+                    <ul class="dropdown-menu dropdown-animation dropdown-menu-end pt-3 small me-md-n3" aria-labelledby="profileDropdown">
+                        <!-- Profile info -->
+                        <li class="px-3">
+                            <div class="d-flex align-items-center position-relative">
+                                <!-- Avatar -->
+                                <div class="avatar me-3">
+                                    <img class="avatar-img rounded-circle" src='{{user.userprofilesetting.profile_img.url}}' alt="avatar">
+                                </div>
+                                <div>
+                                    <a class="h6 stretched-link" href="{% url 'user' %}">
+                                        {{user.username|upper}}
+                                    </a>
+                                </div>
+                            </div>
+                            <a class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center" href='{% url "user" %}'>View
+                                profile</a>
+                        </li>
+                        <!-- Links -->
+                        <li><a class="dropdown-item" href="{% url 'user-settings' %}"><i class="bi bi-gear fa-fw me-2"></i>Settings
+                                &
+                                Privacy</a></li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'change-password' %}">
+                                <i class="fa-fw fa fa-key me-2"></i>Change Password
+                            </a>
+                        </li>
+                        <li class="dropdown-divider"></li>
+                        <li><a class="dropdown-item bg-danger-soft-hover" href="{% url 'logout' %}"><i class="bi bi-power fa-fw me-2"></i>Sign Out</a></li>
+                        <!-- Dark mode switch START -->
+                        <!-- Dark mode switch END -->
+                    </ul>
+                </li>
+                <!-- Profile START -->
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href='{% url "login" %}'>Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link fw-bold" href="{% url 'register' %}">Register</a>
+                </li>
+                {% endif %}
+
+
+                <!-- Nav item 4 Mega menu -->
+
+
+                <!-- Notification dropdown END -->
+
+
+
+            </ul>
+            <!-- Nav right END -->
+        </div>
+    </nav>
+    <!-- Logo Nav END -->
+</header>
+<!-- ======================= Header END -->

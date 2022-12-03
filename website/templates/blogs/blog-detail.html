@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load post_tags %}
+
+{% block title %}
+{{blog.title}}
+{% endblock title %}
+
+{% block content %}
+<!-- Container START -->
+<div class="container">
+    <div class="row mx-auto">
+        <!-- Main content START -->
+        <div class="col-lg-7">
+            <div class="vstack gap-4">
+                <!-- Blog single START -->
+                <div class="card card-body">
+                    <img class="rounded" src="{{blog.post_image.url}}" alt="">
+                    <div class="mt-4">
+                        <!-- Tag -->
+                        <a href="#" class="badge bg-success bg-opacity-10 text-success mb-2 fw-bold">
+                            {{blog.tag}}
+                        </a>
+                        <!-- Title info -->
+                        <h1 class="mb-2 h2"> {{blog.title}}.</h1>
+                        <ul class="nav nav-stack gap-3 align-items-center">
+                            <li class="nav-item">
+                                <div class="nav-link">
+                                    by <a href="#" class="text-reset btn-link"> {{blog.author}} </a>
+                                </div>
+                            </li>
+                            <li class="nav-item"> <i class="bi bi-calendar-date pe-1"></i>
+                                {{blog.created_date.date}}
+                            </li>
+                        </ul>
+                        <!-- description -->
+                        <p class="mt-4">{{blog.content|safe}} </p>
+                    </div>
+                </div>
+                <!-- Card END -->
+                <!-- Comments START -->
+                <div class="card">
+                    {% if comments.count == 0 %}
+                    <span class="h5 h-30px text-center mt-2">No Comments</span>
+                    {% else %}
+                    <div class="card-header pb-0 border-0">
+                        <h4>{{comments.count}} comments </h4>
+                    </div>
+                    <div class="card-body">
+                        <!-- Comments START -->
+                        <!-- Comment level 1-->
+                        {% for comment in comments %}
+                        <div class="my-4 d-flex ps-3">
+                            <div>
+                                <div class="mb-2 d-sm-flex">
+                                    <h6 class="m-0 me-2"> {{comment.name}} </h6>
+                                    <span class="me-3 small">
+                                        {% if comment.time.date|olderDay %}
+                                        {{comment.time}}
+                                        {% else %}
+                                        {{comment.time|timesince}}
+                                        {% endif %}
+
+                                    </span>
+                                </div>
+                                <p> {{comment.comment}} </p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                <!-- Blog single END -->
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Leave a reply</h4>
+                </div>
+                <!-- Reply START -->
+                <div class="card-body">
+                    <form class="row g-3 mt-2" method="post" action="">
+                        {% csrf_token %}
+                        {% for com_field in form %}
+
+                        <div class="col-12">
+                            <label for="form-label"> {{com_field.label}} </label>
+                            {{com_field}}
+                        </div>
+                        {% endfor %}
+
+                        <!-- Button -->
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-success-soft">Post comment</button>
+                        </div>
+                    </form>
+                </div>
+                {{demo.count}}
+            </div>
+        </div>
+        <!-- Main content END -->
+    </div> <!-- Row END -->
+</div>
+<!-- Container END -->
+
+{% endblock content %}

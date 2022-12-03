@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<!-- Mirrored from social.webestica.com/sign-in.html by HTTrack Website Copier/3.x [XR&CO'2017], Thu, 27 Oct 2022 06:53:27 GMT -->
+
+<head>
+    <title>
+        {% block title %}
+        Blog
+        {% endblock title %}
+    </title>
+
+    <!-- Meta Tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Webestica.com">
+    <meta name="description" content="Bootstrap 5 based Social Media Network and Community Theme">
+
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" type="text/css" href='{% static "assets/vendor/font-awesome/css/all.min.css" %}'>
+    <link rel="stylesheet" type="text/css" href='{% static "assets/vendor/bootstrap-icons/bootstrap-icons.css" %}'>
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href='{% static "assets/css/style.css" %}' crossorigin="anonymous">
+    {% block css_files %}
+
+    {% endblock css_files %}
+
+</head>
+
+<body>
+
+    {% include "navbar.html" %}
+
+    <!-- **************** MAIN CONTENT START **************** -->
+    <main>
+        {% block content %}
+
+        {% endblock content %}
+    </main>
+    <!-- **************** MAIN CONTENT END **************** -->
+
+
+    <!-- Bootstrap JS -->
+    <script src='{% static "assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js" %}'></script>
+    <script src='{% static "assets/js/jquery.js" %}'></script>
+    <script src='{% static "js/main.js" %}'></script>
+
+
+</body>
+
+</html>
