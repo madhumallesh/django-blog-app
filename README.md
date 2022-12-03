@@ -24,7 +24,7 @@
 
 ### **Environment Setup**
 
-`git clone URL`
+`git clone https://github.com/madhumallesh/django-blog-app.git`
 
 ` cd django-blog`
 
