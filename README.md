@@ -8,19 +8,6 @@
     3. View, Update, Edit your Profiles
     4. User Password Reset & Password change Feature
 
-### Home View
-
-![Home image](/screenshots/home.png)
-
-### User view
-
-![User Image](/screenshots/user.png)
-
-### Create View
-
-![Blog Create Image](/screenshots/create.png)
-
----
 
 ### **Environment Setup**
 
