@@ -57,25 +57,3 @@ _All set_
 `python manage.py runserver`
 
 ---
-
-### to Create a Fake data in database run the following commands..
-
-_to create Users_
-
-` python manage.py createdata --user --n 5`
-
-_to create Tags_
-
-`python manage.py createdata --tags`
-
-_to create Post_
-
-`python manage.py createdata --post --n 30`
-
-_to create Comments (On published posts)_
-
-`python manage.py createdata --comment --n 15`
-
----
-
-# **Thank You**
